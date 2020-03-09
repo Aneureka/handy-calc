@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" type="image/png" href="/static/images/icons/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/filepond/dist/filepond.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="title">{{ title }}</div>
+        <div class="sentence desc">可能是一个乖巧懂事的手写计算器</div>
+        <hr />
+        <!-- <div class="sentence footnote">目前仅能处理比较简单的式子，未来可能好一些</div> -->
+        <div class="sentence footnote site-info">© <span id="year">2020</span> Handy Calculator</div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+<script>
+
+$(function() {
+    // function definition
+    let copyToClipboard = (element) => {
+        let $temp = $('<input>');
+        $('body').append($temp);
+        $temp.val($(element).text()).select();
+        console.log($(element).text());
+        document.execCommand('copy');
+        $temp.remove();
+    };
+
+    // initialization
+    
+});
+
+</script>
+
+</body>
+</html>
+
+
+
+

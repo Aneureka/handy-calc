@@ -1,0 +1,31 @@
+# idea
+.idea
+*.ini
+*.pyc
+logs
+.DS_Store
+
+# virtual environment
+venv
+
+# py cache
+__pycache__
+
+# script
+*.sh
+.tmp
+
+logs
+
+# uwsgi
+*.ini
+!*-docker.ini
+
+# vscode
+.vscode
+
+# tmux
+tmux*.log
+
+# env file
+.env
