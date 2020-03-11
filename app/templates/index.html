@@ -13,6 +13,9 @@
     <div class="main">
         <div class="title">{{ title }}</div>
         <div class="sentence desc">可能是一个乖巧懂事的手写计算器</div>
+
+        <iframe src="/drawing-board" width="500" height="450" frameborder="0" scrolling="no"></iframe>
+
         <hr />
         <!-- <div class="sentence footnote">目前仅能处理比较简单的式子，未来可能好一些</div> -->
         <div class="sentence footnote site-info">© <span id="year">2020</span> Handy Calculator</div>
@@ -22,20 +25,19 @@
 
 <script>
 
-$(function() {
+    $(function() {
     // function definition
-    let copyToClipboard = (element) => {
-        let $temp = $('<input>');
-        $('body').append($temp);
-        $temp.val($(element).text()).select();
-        console.log($(element).text());
-        document.execCommand('copy');
-        $temp.remove();
-    };
+        let copyToClipboard = (element) => {
+            let $temp = $('<input>');
+            $('body').append($temp);
+            $temp.val($(element).text()).select();
+            console.log($(element).text());
+            document.execCommand('copy');
+            $temp.remove();
+        };
 
     // initialization
-    
-});
+    });
 
 </script>
 

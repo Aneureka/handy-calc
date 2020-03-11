@@ -15,6 +15,9 @@ def ping():
 def index():
     return render_template('index.html', title=current_app.config['APP_NAME'], host=current_app.config['HOST'])
 
+@api.route('/drawing-board', methods=['GET'])
+def drawingboard():
+    return render_template('drawing-board.html', title=current_app.config['APP_NAME'], host=current_app.config['HOST'])
 
 @api.route('/convert', methods=['POST'])
 def convert():

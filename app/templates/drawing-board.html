@@ -1,0 +1,151 @@
+
+<link rel="stylesheet" type="text/css" href="static/css/drawing-board.css">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+
+{#d8f7fe#}
+<body style="background-color: transparent" >
+    <div>
+        <canvas id="drawing-board" width="500" height="370"> 您的浏览器不支持canvas </canvas>
+    </div>
+
+    <div style="margin-top: 20px; text-align-last: right">
+        <button id="convert" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">转换</button>
+        <button class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">撤回</button>
+        <button class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">清除</button>
+    </div>
+</body>
+
+<script>
+    let painting = false;
+    let lastPoint = {x: undefined, y: undefined};
+
+    let canvas = document.getElementById("drawing-board");
+    let ctx = canvas.getContext("2d");
+
+    let BB = canvas.getBoundingClientRect();
+    let offsetX = BB.left;
+    let offsetY = BB.top;
+
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    //鼠标按下事件
+    canvas.onmousedown = function (e) {
+        painting = true;
+        let x = e.clientX;
+        let y = e.clientY;
+        lastPoint = {"x": x, "y": y};
+    };
+
+    //鼠标移动事件
+    canvas.onmousemove = function (e) {
+        if (painting) {
+            let x = e.clientX;
+            let y = e.clientY;
+            let newPoint = {"x": x, "y": y};
+            drawLine(lastPoint.x-offsetX, lastPoint.y-offsetY, newPoint.x-offsetX, newPoint.y-offsetY);
+            lastPoint = newPoint;
+        }
+    };
+
+    //鼠标松开事件
+    canvas.onmouseup = function () {
+        painting = false;
+    };
+
+    // 画点函数
+    function drawCircle(x, y, radius) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    // 划线函数
+    function drawLine(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();    // 笔触结束，路径结束
+    }
+
+    let convert = document.getElementById("convert");
+
+    // 转换
+    convert.onclick = function () {
+        let imgUrl = canvas.toDataURL("image/png");
+
+        $.ajax({
+            url: "/convert",
+            type: "POST",
+            data: JSON.stringify({image_uri: imgUrl}),
+            dataType: "json",
+            contentType:'application/json',
+            success: function (data) {
+                // 返回latex公式
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        })
+    }
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
