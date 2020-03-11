@@ -12,8 +12,7 @@
 
     <div style="margin-top: 20px; text-align-last: right">
         <button id="convert" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">转换</button>
-        <button class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">撤回</button>
-        <button class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">清除</button>
+        <button id="clear" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">清空</button>
     </div>
 </body>
 
@@ -75,10 +74,10 @@
         ctx.closePath();    // 笔触结束，路径结束
     }
 
-    let convert = document.getElementById("convert");
+    let convertButton = document.getElementById("convert");
 
     // 转换
-    convert.onclick = function () {
+    convertButton.onclick = function () {
         let imgUrl = canvas.toDataURL("image/png");
 
         $.ajax({
@@ -95,8 +94,13 @@
                 console.log(data);
             }
         })
-    }
+    };
 
+    let clearButton = document.getElementById("clear");
+    clearButton.onclick = function () {
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
 
 
 
