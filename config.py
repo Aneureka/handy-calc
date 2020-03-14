@@ -11,6 +11,7 @@ class Config:
     MATHPIX_API = 'https://api.mathpix.com/v3/text'
     MATHPIX_APP_ID = os.environ.get('MATHPIX_APP_ID')
     MATHPIX_APP_KEY = os.environ.get('MATHPIX_APP_KEY')
+    MATHPIX_CONFIDENCE_THRESHOLD = 0.8
 
     @staticmethod
     def init_app(app):

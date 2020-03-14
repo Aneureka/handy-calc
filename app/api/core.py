@@ -3,8 +3,8 @@ import requests
 import json
 
 from . import api
-from app.service.convert import convert_image_to_latex
-from app.utils import convert_file_size_to_mb
+from app.service.convert import convert_image_to_latex, get_latex_equation
+from app.utils import *
 
 @api.route('/ping', methods=['GET'])
 def ping():
@@ -24,9 +24,14 @@ def convert():
     if request.method == 'POST':
         image_uri = request.json.get('image_uri')
         if image_uri is None:
-            return json.dumps({'code': -1, 'msg': 'Param of <image_uri> (image base64) required.'})
-        data = convert_image_to_latex(image_uri)
-        return json.dumps({'code': 0, 'data': data}) 
+            return build_resp(code=-1, msg='Param of <image_uri> (image base64) required.')
+        latex = convert_image_to_latex(image_uri)
+        if latex is None:
+            return build_resp(code=-1, data='The provided text can not be recognized.')
+        equation = get_latex_equation(latex)
+        if equation is None:
+            return build_resp(code=-1, data='The provided text can not be recognized.')
+        return build_resp(code=0, data=equation)
 
 
 @api.route('/test', methods=['GET'])
