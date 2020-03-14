@@ -1,5 +1,6 @@
 import base64
 import json
+import re
 
 import requests
 from flask import current_app
@@ -47,6 +48,7 @@ def convert_image_to_latex(image_uri=None):
 
 def get_latex_equation(latex_text):
     try:
+        latex_text = re.sub('\s*=\s*$', '', latex_text)
         res = _calculate(latex_text)
         equation = latex_text + ' = '
         if res == int(res):
@@ -55,7 +57,8 @@ def get_latex_equation(latex_text):
             equation += str('%.2f' % res)
         print('latex equation: %s' % equation)
         return equation
-    except Exception:
+    except Exception as e:
+        print(e)
         return None
     
 
@@ -65,5 +68,5 @@ def _calculate(latex_text=None):
 
 
 if __name__ == '__main__':
-    inputLatex = '\\frac{|5-1}{7 \\times 6}'
+    inputLatex = '\\frac{15-1}{7 \\times 6} = '
     get_latex_equation(inputLatex)
