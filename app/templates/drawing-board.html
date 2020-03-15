@@ -8,6 +8,7 @@
 <body style="background-color: transparent" >
     <div>
         <canvas id="drawing-board" width="500" height="370"> 您的浏览器不支持canvas </canvas>
+
     </div>
 
     <div style="margin-top: 20px; text-align-last: right">
@@ -22,7 +23,6 @@
 
     let canvas = document.getElementById("drawing-board");
     let ctx = canvas.getContext("2d");
-
     let BB = canvas.getBoundingClientRect();
     let offsetX = BB.left;
     let offsetY = BB.top;
@@ -78,8 +78,8 @@
 
     // 转换
     convertButton.onclick = function () {
-        let imgUrl = canvas.toDataURL("image/png");
-
+        let imgUrl = canvas.toDataURL("image/jpg");
+        imgUrl = imgUrl.replace(/^data:image\/\w+;base64,/, "");
         $.ajax({
             url: "/convert",
             type: "POST",
@@ -88,10 +88,30 @@
             contentType:'application/json',
             success: function (data) {
                 // 返回latex公式
-                console.log(data);
+                var dataObj=data;//转换为json对象
+					if(dataObj.code == 0){
+						var data=dataObj.data;
+						if(data!=null){
+						    console.log(data)
+                            ctx.fillStyle = '#fff';
+						    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.fillStyle="#000000";
+						    ctx.font = 'bold 40px sans-serif';
+						    ctx.textBaseline = 'middle'
+                            ctx.textAlign='center'
+                            ctx.fillText(data, canvas.width/2, canvas.height/2);
+                        }
+						else{
+						   alert("识别失败")
+                        }
+					}else{
+					    console.log(data);
+						 alert("识别失败")
+						return;
+					}
             },
             error: function (data) {
-                console.log(data);
+                 alert("识别失败")
             }
         })
     };
