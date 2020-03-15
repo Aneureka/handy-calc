@@ -14,7 +14,7 @@
         <div class="title">{{ title }}</div>
         <div class="sentence desc">可能是一个乖巧懂事的手写计算器</div>
 
-        <iframe src="/drawing-board" width="500" height="450" frameborder="0" scrolling="no"></iframe>
+        <iframe id = "frame" src="/drawing-board" frameborder="0" scrolling="no"></iframe>
 
         <hr />
         <!-- <div class="sentence footnote">目前仅能处理比较简单的式子，未来可能好一些</div> -->
@@ -38,6 +38,16 @@
 
     // initialization
     });
+
+
+    let frame = document.getElementById("frame");
+    let BB = frame.getBoundingClientRect();
+
+    let offsetX = BB.left;
+    let offsetY = BB.top;
+
+    $("#frame").attr("width", $(window).get(0).innerWidth - 2*offsetX);
+    $("#frame").attr("height", $(window).get(0).innerHeight - 2*offsetY);
 
 </script>
 
