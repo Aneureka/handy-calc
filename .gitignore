@@ -13,7 +13,6 @@ __pycache__
 
 # script
 *.sh
-.tmp
 
 logs
 
