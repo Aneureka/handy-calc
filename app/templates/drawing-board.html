@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="static/css/drawing-board.css">
 <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
 <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
@@ -10,22 +10,17 @@
 
 <style>
  latex-js {
-     display: inline-block;
      background-color: white;
-      width: 40%;
+     width: 100%;
+     height: 82%;
      height:370px;
-    }
-{#    canvas{#}
-{#       width: 40%;#}
-{#     height:370px;#}
-{#        display: inline-block;#}
-{#    }#}
+ }
 </style>
 
 <body style="background-color: transparent" >
     <div id="board">
         <canvas id="drawing-board" style="width: 100%; height: 82%;background-color: white"> 您的浏览器不支持canvas </canvas>
-{#        <latex-js hyphenate="false" id="showing-board"></latex-js>#}
+        <latex-js hyphenate="false" id="showing-board"></latex-js>
     </div>
 
     <div style="margin-top: 20px;">
@@ -44,6 +39,7 @@
 
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("showing-board").style.display="none";
 
 
     //鼠标按下事件
@@ -145,31 +141,25 @@
 					if(dataObj.code === 0){
 						var data=dataObj.data;
 						if(data!=null){
-						    data="$$"+data+"$$"
-                            ctx.fillStyle = '#fff';
-						    ctx.fillRect(0, 0, canvas.width, canvas.height);
-						    board.innerHTML=data;
-{#                            let generator = new latexjs.HtmlGenerator({ hyphenate: false })#}
-{#                            generator = latexjs.parse(data, { generator: generator })#}
-{#                            document.body.appendChild(generator.stylesAndScripts("https://cdn.jsdelivr.net/npm/latex.js@0.11.1/dist/"))#}
-{#                            document.body.appendChild(generator.domFragment())#}
-{#                            console.log("doc"+doc)#}
-{#                            ctx.fillStyle="#000000";#}
-{#						    ctx.font = 'bold 40px sans-serif';#}
-{#						    ctx.textBaseline = 'middle'#}
-{#                            ctx.textAlign='center'#}
-{#                            ctx.fillText(doc.outerHTML, canvas.width/2, canvas.height/2);#}
+						    data="$$"+data+"$$";
+                            canvas.style.display="none";
+                            board.innerHTML=data;
+						    board.style.display="inline";
                         }
 						else{
 						   alert("识别失败");
 						   ctx.fillStyle = '#fff';
 						   ctx.fillRect(0, 0, canvas.width, canvas.height);
+						   canvas.style.display="inline";
+						   board.style.display="none";
                         }
 					}else{
 					    console.log(data);
 						 alert("识别失败");
 						 ctx.fillStyle = '#fff';
 						 ctx.fillRect(0, 0, canvas.width, canvas.height);
+						 canvas.style.display="inline";
+						 board.style.display="none";
 						return;
 					}
             },
@@ -177,6 +167,8 @@
                  alert("识别失败");
                  ctx.fillStyle = '#fff';
                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                 canvas.style.display="inline";
+                 board.style.display="none";
             }
         })
     };
@@ -185,6 +177,8 @@
     clearButton.onclick = function () {
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display="inline";
+        board.style.display="none";
     };
 
 
