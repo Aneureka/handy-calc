@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="static/css/drawing-board.css">
 <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+ <link rel="stylesheet" type="text/css" href="/static/css/drawing-board.css">
 <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 <script type="module">
@@ -9,23 +10,25 @@
 </script>
 
 <style>
- latex-js {
+ #show {
      background-color: white;
      width: 100%;
-     height: 82%;
-     height:370px;
+     height: 30%;
  }
 </style>
 
-<body style="background-color: transparent" >
-    <div id="board">
-        <canvas id="drawing-board" style="width: 100%; height: 82%;background-color: white"> 您的浏览器不支持canvas </canvas>
-        <latex-js hyphenate="false" id="showing-board"></latex-js>
+<body style="background-color: transparent" style=" height:100%">
+    <div id="board" style=" height:40%">
+        <canvas id="drawing-board" style="width: 100%; height:100%;background-color: white"> 您的浏览器不支持canvas </canvas>
     </div>
 
     <div style="margin-top: 20px;">
         <button id="convert" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;">转换</button>
         <button id="clear" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">清空</button>
+    </div>
+
+    <div id="show" style="margin-top: 20px; height:30%">
+        <latex-js hyphenate="false" id="showing-board">转换结果</latex-js>
     </div>
 </body>
 
@@ -39,7 +42,6 @@
 
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    document.getElementById("showing-board").style.display="none";
 
 
     //鼠标按下事件
@@ -142,7 +144,8 @@
 						var data=dataObj.data;
 						if(data!=null){
 						    data="$$"+data+"$$";
-                            canvas.style.display="none";
+                            ctx.fillStyle = '#fff';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
                             board.outerHTML='<latex-js hyphenate="false" id="showing-board">'+data+'</latex-js>';
 						    board.style.display="inline";
                         }
