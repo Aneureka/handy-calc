@@ -23,14 +23,19 @@ def drawingboard():
 def convert():
     if request.method == 'POST':
         image_uri = request.json.get('image_uri')
+        # print(image_uri)
         if image_uri is None:
             return build_resp(code=-1, msg='Param of <image_uri> (image base64) required.')
         latex = convert_image_to_latex(image_uri)
+        # print(latex)
         if latex is None:
-            return build_resp(code=-1, data='The provided text can not be recognized.')
+            print("null")
+            return build_resp(code=-1, msg='The provided text can not be recognized.')
         equation = get_latex_equation(latex)
+        # print("equation")
         if equation is None:
-            return build_resp(code=-1, data='The provided text can not be recognized.')
+            return build_resp(code=-1, msg='The provided text can not be recognized.')
+        # print("build")
         return build_resp(code=0, data=equation)
 
 
