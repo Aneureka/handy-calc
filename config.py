@@ -4,6 +4,7 @@ import os
 class Config:
     # app
     APP_NAME = 'Handy Calculator'
+    APPLICATION_ROOT = '/handy-calc'
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
     ACCEPTED_FILE_TYPES = ['.jpeg', '.jpg', '.png']
     MAX_CONTENT_LENGTH = 120 * 1024 * 1024

@@ -86,6 +86,7 @@
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       let rect = canvas.getBoundingClientRect();
+      console.log(rect.left, rect.top);
       ctx.moveTo(x1 - rect.left, y1 - rect.top);
       ctx.lineTo(x2 - rect.left, y2 - rect.top);
       ctx.stroke();
@@ -103,7 +104,7 @@
       let imageUri = canvas.toDataURL('image/jpg');
       imageUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
       $.ajax({
-          url: '/convert',
+          url: '/handy-calc/convert',
           type: 'POST',
           data: JSON.stringify({image_uri: imageUri}),
           dataType: 'json',
