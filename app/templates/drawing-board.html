@@ -143,7 +143,7 @@
 						if(data!=null){
 						    data="$$"+data+"$$";
                             canvas.style.display="none";
-                            board.innerHTML=data;
+                            board.outerHTML='<latex-js hyphenate="false" id="showing-board">'+data+'</latex-js>';
 						    board.style.display="inline";
                         }
 						else{
@@ -151,7 +151,6 @@
 						   ctx.fillStyle = '#fff';
 						   ctx.fillRect(0, 0, canvas.width, canvas.height);
 						   canvas.style.display="inline";
-						   board.style.display="none";
                         }
 					}else{
 					    console.log(data);
@@ -159,7 +158,6 @@
 						 ctx.fillStyle = '#fff';
 						 ctx.fillRect(0, 0, canvas.width, canvas.height);
 						 canvas.style.display="inline";
-						 board.style.display="none";
 						return;
 					}
             },
@@ -168,17 +166,18 @@
                  ctx.fillStyle = '#fff';
                  ctx.fillRect(0, 0, canvas.width, canvas.height);
                  canvas.style.display="inline";
-                 board.style.display="none";
             }
         })
     };
 
     let clearButton = document.getElementById("clear");
     clearButton.onclick = function () {
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        canvas.style.display="inline";
-        board.style.display="none";
+        window.location.reload();
+{#        document.getElementById("showing-board").style.display="none";#}
+{#        ctx.fillStyle = '#fff';#}
+{#        ctx.fillRect(0, 0, canvas.width, canvas.height);#}
+{#        canvas.style.display="inline";#}
+
     };
 
 
