@@ -1,4 +1,4 @@
-from flask import request, render_template, current_app
+from flask import request, render_template, current_app, send_from_directory
 import requests
 import json
 
@@ -9,7 +9,6 @@ from app.utils import *
 @api.route('/ping', methods=['GET'])
 def ping():
     return 'Link started!'
-
 
 @api.route('/', methods=['GET'])
 def index():
@@ -43,3 +42,5 @@ def convert():
 def test():
     convert_image_to_latex()
     return 'Converted!'
+
+
