@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <link rel="stylesheet" type="text/css" href="static/css/drawing-board.css">
 <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
 <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
@@ -23,15 +23,13 @@
 </style>
 
 <body style="background-color: transparent" >
-    <div>
-        <canvas id="drawing-board" > 您的浏览器不支持canvas </canvas>
+    <div id="board">
+        <canvas id="drawing-board" style="width: 100%; height: 82%"> 您的浏览器不支持canvas </canvas>
         <latex-js hyphenate="false" id="showing-board"></latex-js>
-
-
     </div>
 
-    <div style="margin-top: 20px; text-align-last: right">
-        <button id="convert" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">转换</button>
+    <div style="margin-top: 20px;">
+        <button id="convert" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;">转换</button>
         <button id="clear" class="mdui-btn mdui-btn-raised" style="background-color: whitesmoke; text-align-last: center;margin-left: 30px;">清空</button>
     </div>
 </body>
@@ -65,7 +63,8 @@
             let x = e.clientX;
             let y = e.clientY;
             let newPoint = {"x": x, "y": y};
-            drawLine(lastPoint.x-offsetX, lastPoint.y-offsetY, newPoint.x-offsetX, newPoint.y-offsetY);
+
+            drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
             lastPoint = newPoint;
         }
     };
@@ -75,13 +74,47 @@
         painting = false;
     };
 
-    // 画点函数
-    function drawCircle(x, y, radius) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fill();
+
+    // 触摸加监听
+    canvas.addEventListener("touchstart", handleStart, false);
+    canvas.addEventListener("touchend", handleEnd, false);
+    canvas.addEventListener("touchmove", handleMove, false);
+
+    // 触摸开始事件
+    function handleStart(evt) {
+        painting = true;
+        evt.preventDefault();
+
+        let touch = evt.changedTouches[0];
+
+        let x = touch.pageX;
+        let y = touch.pageY;
+        lastPoint = {"x": x, "y": y};
     }
+
+    // 触摸移动事件
+    function handleMove(evt) {
+        evt.preventDefault();
+
+        let touch = evt.changedTouches[0];
+
+        if (painting) {
+            let x = touch.pageX;
+            let y = touch.pageY;
+            let newPoint = {"x": x, "y": y};
+            drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
+            lastPoint = newPoint;
+        }
+    }
+
+    // 触摸结束事件
+    function handleEnd(evt) {
+        evt.preventDefault();
+        painting = false;
+    }
+
+    let offsetX = canvas.width/canvas.clientWidth;
+    let offsetY = canvas.height/canvas.clientHeight;
 
     // 划线函数
     function drawLine(x1, y1, x2, y2) {
@@ -89,8 +122,9 @@
         ctx.lineWidth = 2;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+
+        ctx.moveTo(Math.floor(x1 * offsetX), Math.floor(y1 * offsetY) );
+        ctx.lineTo(Math.floor(x2 * offsetX), Math.floor(y2 * offsetY)  );
         ctx.stroke();
         ctx.closePath();    // 笔触结束，路径结束
     }
